@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+        --gradient: linear-gradient(45deg, #ff3366, #ff6b6b, #4834d4, #686de0);
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --border: 1px solid rgba(255, 255, 255, 0.1);
+        --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1.2rem 5%;
+        backdrop-filter: blur(12px);
+        background: var(--glass-bg);
+        border-bottom: var(--border);
+        z-index: 1000;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: var(--shadow);
+        background: #efb9cb;
+    }
+
+
+        .navbar.scrolled {
+            padding: 0.8rem 5%;
+            background: rgba(10, 10, 10, 0.95);
+            position: fixed;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 8s linear infinite;
+            background-size: 300%;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            background-size: 300%;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            background-size: 300%;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a:hover::after {
+            width: 100%;
+            animation: gradient 8s linear infinite;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            z-index: 1001;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .mobile-nav-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav-toggle .bar {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: white;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-nav-toggle .bar:nth-child(1) { top: 14px; }
+        .mobile-nav-toggle .bar:nth-child(2) { top: 19px; }
+        .mobile-nav-toggle .bar:nth-child(3) { top: 24px; }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: linear-gradient(135deg, rgba(10, 10, 10, 0.99), rgba(20, 20, 20, 0.99));
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+                padding: 2rem;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-links::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03));
+                pointer-events: none;
+            }
+
+            .dropdown-content {
+        left: 0;
+        width: 100%;
+        color: black;
+    }
+
+    .dropdown-content a:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                opacity: 0;
+                transform: translateX(20px);
+                transition: all 0.4s ease;
+            }
+
+            .nav-links.active a {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links a:nth-child(1) { transition-delay: 0.1s; }
+            .nav-links a:nth-child(2) { transition-delay: 0.2s; }
+            .nav-links a:nth-child(3) { transition-delay: 0.3s; }
+            .nav-links a:nth-child(4) { transition-delay: 0.4s; }
+            .nav-links a:nth-child(5) { transition-delay: 0.5s; }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .mobile-nav-toggle.active .bar:nth-child(1) {
+                transform: translate(-50%, 5px) rotate(45deg);
+                width: 24px;
+            }
+
+            .mobile-nav-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-nav-toggle.active .bar:nth-child(3) {
+                transform: translate(-50%, -5px) rotate(-45deg);
+                width: 24px;
+            }
+
+              .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s ease;
+                backdrop-filter: blur(4px);
+            } 
+
+            .overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #EFB9CB;
+    min-width: 160px;
+    z-index: 1;
+    margin-left: -30px;
+}
+
+.dropdown-content a {
+    color: whitesmoke;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container1 {
+            width: 80%;
+            max-width: 800px;
+            text-align: center;
+            /* border: 2px solid black; */
+             margin-top: 620px; 
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .box {
+            background-color: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        input {
+            padding: 8px;
+            margin: 10px;
+            width: 200px;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+
+        p {
+            font-size: 18px;
+            font-weight: bold;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+            margin-top: 15px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #multiply-result {
+            animation-delay: 0.5s;
+        }
+        #divide-result {
+            animation-delay: 1s;
+        }
+        #add-result {
+            animation-delay: 1.5s;
+        }
+        #subtract-result {
+            animation-delay: 2s;
+        }
+
+
+           /* Footer */
+           @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+body{
+	line-height: 1.5;
+	font-family: 'Poppins', sans-serif;
+}
+        *{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+        .container{
+	max-width: 1170px;
+	margin:auto;
+}
+.row{
+	display: flex;
+	flex-wrap: wrap;
+}
+ul{
+	list-style: none;
+}
+        .footer{
+	background-color: #24262b;
+    padding: 70px 0;
+    width: 100%;
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+	font-size: 18px;
+	color: #ffffff;
+	text-transform: capitalize;
+	margin-bottom: 35px;
+	font-weight: 500;
+	position: relative;
+}
+.footer-col h4::before{
+	content: '';
+	position: absolute;
+	left:0;
+	bottom: -10px;
+	background-color: #e91e63;
+	height: 2px;
+	box-sizing: border-box;
+	width: 50px;
+}
+.footer-col ul li:not(:last-child){
+	margin-bottom: 10px;
+}
+.footer-col ul li a{
+	font-size: 16px;
+	text-transform: capitalize;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 300;
+	color: #bbbbbb;
+	display: block;
+	transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+	color: #ffffff;
+	padding-left: 8px;
+}
+.footer-col .social-links a{
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	background-color: rgba(255,255,255,0.2);
+	margin:0 10px 10px 0;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 50%;
+	color: #ffffff;
+	transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+	color: #24262b;
+	background-color: #ffffff;
+}
+
+/*responsive*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
+</style>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">KidsZone</div>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="newhome.html">Home</a></li>
+                <div class="dropdown">
+                    <a href="javascript:void(0)">Learning</a>
+                    <div class="dropdown-content">
+                        <a href="abc2.html">ABC</a>
+                        <a href="animal2.html">Animals</a>
+                        <a href="months.html">Months & Days</a>
+                        <a href="vegetable.html">Vegetables</a>
+                        <a href="color2.html">Colours</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="javascript:void(0)">Numbers</a>
+                    <div class="dropdown-content">
+                        <a href="numbers2.html">Countings</a>
+                        <a href="table.html">Tables</a>
+                        <a href="#numbers3">Addition & Subtraction</a>
+                    </div>
+                </div>
+                <li><a href="contactus.html">Contact</a></li>
+                <li><a href="sing and login.html">Login</a></li>
+                <li><a href="aboutus3.html">About us</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container1">
+        <h1>Simple Calculator</h1>
+        
+        <div class="box" id="multiply-box">
+            <h2>Multiplication</h2>
+            <input type="number" id="multiply-num1" placeholder="Enter first number">
+            <input type="number" id="multiply-num2" placeholder="Enter second number">
+            <button onclick="multiply()">Multiply</button>
+            <p id="multiply-result"></p>
+        </div>
+    
+        <div class="box" id="divide-box">
+            <h2>Division</h2>
+            <input type="number" id="divide-num1" placeholder="Enter first number">
+            <input type="number" id="divide-num2" placeholder="Enter second number">
+            <button onclick="divide()">Divide</button>
+            <p id="divide-result"></p>
+        </div>
+    
+        <div class="box" id="add-box">
+            <h2>Addition</h2>
+            <input type="number" id="add-num1" placeholder="Enter first number">
+            <input type="number" id="add-num2" placeholder="Enter second number">
+            <button onclick="add()">Add</button>
+            <p id="add-result"></p>
+        </div>
+    
+        <div class="box" id="subtract-box">
+            <h2>Subtraction</h2>
+            <input type="number" id="subtract-num1" placeholder="Enter first number">
+            <input type="number" id="subtract-num2" placeholder="Enter second number">
+            <button onclick="subtract()">Subtract</button>
+            <p id="subtract-result"></p>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>company</h4>
+                    <ul>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">our services</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                        <li><a href="#">affiliate program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>get help</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">shipping</a></li>
+                        <li><a href="#">returns</a></li>
+                        <li><a href="#">order status</a></li>
+                        <li><a href="#">payment options</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>online shop</h4>
+                    <ul>
+                        <li><a href="#">watch</a></li>
+                        <li><a href="#">bag</a></li>
+                        <li><a href="#">shoes</a></li>
+                        <li><a href="#">dress</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const overlay = document.querySelector('.overlay');
+        let isMenuOpen = false;
+
+        // Scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            mobileNavToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+        }
+
+        mobileNavToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMenu();
+            });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isMenuOpen) toggleMenu();
+        });
+
+        // Prevent scroll when menu is open
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && isMenuOpen) {
+                toggleMenu();
+            }
+        }); 
+
+        function multiply() {
+        let num1 = parseFloat(document.getElementById("multiply-num1").value);
+        let num2 = parseFloat(document.getElementById("multiply-num2").value);
+        let result = num1 * num2;
+        document.getElementById("multiply-result").innerText = "Result: " + result;
+    }
+
+    function divide() {
+        let num1 = parseFloat(document.getElementById("divide-num1").value);
+        let num2 = parseFloat(document.getElementById("divide-num2").value);
+        if (num2 === 0) {
+            document.getElementById("divide-result").innerText = "Error: Cannot divide by zero.";
+        } else {
+            let result = num1 / num2;
+            document.getElementById("divide-result").innerText = "Result: " + result;
+        }
+    }
+
+    function add() {
+        let num1 = parseFloat(document.getElementById("add-num1").value);
+        let num2 = parseFloat(document.getElementById("add-num2").value);
+        let result = num1 + num2;
+        document.getElementById("add-result").innerText = "Result: " + result;
+    }
+
+    function subtract() {
+        let num1 = parseFloat(document.getElementById("subtract-num1").value);
+        let num2 = parseFloat(document.getElementById("subtract-num2").value);
+        let result = num1 - num2;
+        document.getElementById("subtract-result").innerText = "Result: " + result;
+    }
+    </script>
+</body>
+</html>

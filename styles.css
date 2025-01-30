@@ -1,0 +1,168 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #ffcccb;
+    padding: 20px;
+    text-align: center;
+}
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #ff9999;
+    padding: 10px;
+}
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+.container {
+    padding: 20px;
+}
+.section {
+    display: none; /* Initially hidden */
+    margin-bottom: 30px;
+}
+.section.active {
+    display: block; /* Show active section */
+}
+.abc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+.abc-grid div {
+    text-align: center;
+}
+.abc-grid img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+audio {
+    display: block;
+    margin-top: 5px;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #ff9999;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+    nav {
+        flex-wrap: wrap;
+    }
+    nav a {
+        margin: 10px;
+    }
+    .abc-grid img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+.talha{
+    height: 40vh;
+}
+
+.Twinkle{
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #e0f7fa;
+    overflow: hidden;
+}
+
+#game-title {
+    text-align: center;
+    margin: 10px;
+    color: #00796b;
+}
+
+#score-display {
+    text-align: center;
+    margin: 10px;
+    font-size: 1.2rem;
+    color: #004d40;
+}
+
+#paddle {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 20px;
+    background-color: #00796b;
+    border-radius: 10px;
+}
+
+#ball {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background-color: #d32f2f;
+    border-radius: 50%;
+}
+
+#game-over-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: none;
+}
+
+#game-over-container h2 {
+    color: #d32f2f;
+    font-size: 2rem;
+}
+
+#restart-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #00796b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#restart-button:hover {
+    background-color: #004d40;
+}
+
+.Kidss{
+    font-weight: bolder;
+}
+
+.card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+

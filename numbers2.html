@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<style>
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --gradient: linear-gradient(45deg, #ff3366, #ff6b6b, #4834d4, #686de0);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        body {
+            /* background: #efb9cb; */
+            min-height: 100vh; 
+        }
+
+        .navbar {
+              /* position: fixed;  */
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            border-bottom: var(--border);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow);
+            background: #efb9cb;
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 5%;
+            background: rgba(10, 10, 10, 0.95);
+            position: fixed;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 8s linear infinite;
+            background-size: 300%;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            background-size: 300%;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            background-size: 300%;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a:hover::after {
+            width: 100%;
+            animation: gradient 8s linear infinite;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            z-index: 1001;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .mobile-nav-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav-toggle .bar {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: white;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-nav-toggle .bar:nth-child(1) { top: 14px; }
+        .mobile-nav-toggle .bar:nth-child(2) { top: 19px; }
+        .mobile-nav-toggle .bar:nth-child(3) { top: 24px; }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: linear-gradient(135deg, rgba(10, 10, 10, 0.99), rgba(20, 20, 20, 0.99));
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+                padding: 2rem;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-links::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03));
+                pointer-events: none;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                opacity: 0;
+                transform: translateX(20px);
+                transition: all 0.4s ease;
+            }
+
+            .nav-links.active a {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .dropdown-content {
+        left: 0;
+        width: 100%;
+        color: black;
+    }
+
+    .dropdown-content a:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+            .nav-links a:nth-child(1) { transition-delay: 0.1s; }
+            .nav-links a:nth-child(2) { transition-delay: 0.2s; }
+            .nav-links a:nth-child(3) { transition-delay: 0.3s; }
+            .nav-links a:nth-child(4) { transition-delay: 0.4s; }
+            .nav-links a:nth-child(5) { transition-delay: 0.5s; }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .mobile-nav-toggle.active .bar:nth-child(1) {
+                transform: translate(-50%, 5px) rotate(45deg);
+                width: 24px;
+            }
+
+            .mobile-nav-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-nav-toggle.active .bar:nth-child(3) {
+                transform: translate(-50%, -5px) rotate(-45deg);
+                width: 24px;
+            }
+
+              .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s ease;
+                backdrop-filter: blur(4px);
+            } 
+
+            .overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+      
+.section {
+    display: none;
+    margin-bottom: 30px;
+}
+.section.active {
+    display: block; 
+}
+.abc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+   
+    margin-top: 20px;
+}
+
+h2{
+  
+   text-align: center;
+   margin-top: 20px;
+   
+}
+.abc-grid div {
+    text-align: center;
+}
+.abc-grid img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+audio {
+    display: block;
+    margin-top: 5px;
+}
+.card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+body{
+	line-height: 1.5;
+	font-family: 'Poppins', sans-serif;
+}
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+.container{
+	max-width: 1170px;
+	margin:auto;
+}
+.row{
+	display: flex;
+	flex-wrap: wrap;
+}
+ul{
+	list-style: none;
+}
+        .footer{
+	background-color: #24262b;
+    padding: 70px 0;
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+	font-size: 18px;
+	color: #ffffff;
+	text-transform: capitalize;
+	margin-bottom: 35px;
+	font-weight: 500;
+	position: relative;
+}
+.footer-col h4::before{
+	content: '';
+	position: absolute;
+	left:0;
+	bottom: -10px;
+	background-color: #e91e63;
+	height: 2px;
+	box-sizing: border-box;
+	width: 50px;
+}
+.footer-col ul li:not(:last-child){
+	margin-bottom: 10px;
+}
+.footer-col ul li a{
+	font-size: 16px;
+	text-transform: capitalize;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 300;
+	color: #bbbbbb;
+	display: block;
+	transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+	color: #ffffff;
+	padding-left: 8px;
+}
+.footer-col .social-links a{
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	background-color: rgba(255,255,255,0.2);
+	margin:0 10px 10px 0;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 50%;
+	color: #ffffff;
+	transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+	color: #24262b;
+	background-color: #ffffff;
+}
+
+
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #EFB9CB;
+    min-width: 160px;
+    z-index: 1;
+    margin-left: -30px;
+}
+
+
+.dropdown-content a {
+    color: whitesmoke;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.dropdown-content a:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+</style>
+<body>
+    <nav class="navbar">
+    <div class="navbar-container">
+        <div class="logo">KidsZone</div>
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="newhome.html">Home</a></li>
+            <div class="dropdown">
+                <a href="javascript:void(0)">Learning</a>
+                <div class="dropdown-content">
+                    <a href="abc2.html">ABC</a>
+                    <a href="animal2.html">Animals</a>
+                    <a href="months.html">Months & Days</a>
+                    <a href="vegetable.html">Vegetables</a>
+                    <a href="color2.html">Colours</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="javascript:void(0)">Numbers</a>
+                <div class="dropdown-content">
+                    <a href="numbers2.html">Countings</a>
+                    <a href="table.html">Tables</a>
+                    <a href="add1.html">Addition & Subtraction</a>
+                </div>
+            </div>
+            <li><a href="contactus.html">Contact</a></li>
+            <li><a href="sing and login.html">Login</a></li>
+            <li><a href="aboutus3.html">About us</a></li>
+        </ul>
+    </div>
+</nav>
+    <div class="container" id="container1">
+        <!-- ABC Section -->
+        <section id="abc" class="section">
+    <h2>Counting Learning</h2>
+    <div class="abc-grid">
+        <div class="card" onclick="playSound('A')">
+            <img src="num 1.jpg" alt="Apple">
+            <p>One</p>
+        </div>
+        <audio id="A" src="one.mp3"></audio>
+        <div class="card" onclick="playSound('B')">
+            <img src="num 2.jpg" alt="Ball">
+            <p>Two</p>
+        </div>
+        <audio id="B" src="two.mp3"></audio>
+        
+        <div class="card" onclick="playSound('C')">
+            <img src="num3.jpg" alt="Cat">
+            
+            <p> Three</p>
+        </div>
+        <audio id="C" src="three.mp3"></audio>
+        <div class="card" onclick="playSound('D')">
+            <img src="num 4.jpg" alt="Dog">
+            <p> Four</p>
+        </div>
+        <audio id="D" src="four.mp3"></audio>
+        <div class="card" onclick="playSound('E')">
+            <img src="num 5.jpg" alt="Elephant">
+            <p> Five</p>
+        </div>
+        <audio id="E" src="five.mp3"></audio>
+        <div class="card" onclick="playSound('F')">
+            <img src="num 6.jpg" alt="Frog">
+            <p>Six</p>
+        </div>
+        <audio id="F" src="six.mp3"></audio>
+        <div class="card" onclick="playSound('G')">
+            <img src="num 7.jpg" alt="Grape">
+            <p> Seven</p>
+        </div>
+        <audio id="G" src="seven.mp3"></audio>
+        <div class="card" onclick="playSound('H')">
+            <img src="num8.jpg" alt="Hat">
+            <p> Eight</p>
+        </div>
+        <audio id="H" src="eight.mp3"></audio>
+        <div class="card" onclick="playSound('I')">
+            <img src="num 9.jpg" alt="Ice Cream" height="150px">
+            <p> Nine</p>
+        </div>
+        <audio id="I" src="nine.mp3"></audio>
+        <div class="card" onclick="playSound('J')">
+            <img src="num 10.jpg" alt="Jug">
+            <p> Ten</p>
+        </div>
+        <audio id="J" src="ten.mp3"></audio>
+        <div class="card" onclick="playSound('K')">
+            <img src="num 11.jpg" alt="Kite">
+            <p> Eleven</p>
+        </div>
+        <audio id="K" src="eleven.mp3"></audio>
+        <div class="card" onclick="playSound('L')">
+            <img src="num 12.jpg" alt="Lion">
+            <p> Twelve</p>
+        </div>
+        <audio id="L" src="twelve.mp3"></audio>
+        <div class="card" onclick="playSound('M')">
+            <img src="num 13.jpg" alt="Monkey">
+            <p> Thirteen</p>
+        </div>
+        <audio id="M" src="thirteen.mp3"></audio>
+        <div class="card" onclick="playSound('N')">
+            <img src="num 14.jpg" alt="Nest">
+            <p> Fourteen</p>
+        </div>
+        <audio id="N" src="fourteen.mp3"></audio>
+        <div class="card" onclick="playSound('O')">
+            <img src="num 15.jpg" alt="Orange">
+            <p> Fifteen</p>
+        </div>
+        <audio id="O" src="fifteen.mp3"></audio>
+        <div class="card" onclick="playSound('P')">
+            <img src="num 16.jpg" alt="Parrot">
+            <p> Sixteen</p>
+        </div>
+        <audio id="P" src="Sixteen.mp3"></audio>
+        <div class="card" onclick="playSound('Q')">
+            <img src="num 17.jpg" alt="Queen">
+            <p> Seventeen</p>
+        </div>
+        <audio id="Q" src="seventeen.mp3"></audio>
+        <div class="card" onclick="playSound('R')">
+            <img src="num 18.jpg" alt="Rabbit">
+            <p> Eighteen</p>
+        </div>
+        <audio id="R" src="eighteen.mp3"></audio>
+        <div class="card" onclick="playSound('S')">
+            <img src="num 19.jpg" alt="Sun">
+            <p> Nineteen</p>
+        </div>
+        <audio id="S" src="nineteen.mp3"></audio>
+        <div class="card" onclick="playSound('T')">
+            <img src="num 20.jpg" alt="Tree">
+            <p> Twenty</p>
+        </div>
+        <audio id="T" src="twenty.mp3"></audio>
+        <div class="card" onclick="playSound('U')">
+            <img src="num21.jpg" alt="Umbrella">
+            <p> Twentyone</p>
+        </div>
+        <audio id="U" src="twentyone.mp3"></audio>
+        <div class="card" onclick="playSound('V')">
+            <img src="num 22.jpg" alt="Violin">
+            <p>Twentytwo</p>
+        </div>
+        <audio id="V" src="twentytwo.mp3"></audio>
+        <div class="card" onclick="playSound('W')">
+            <img src="num 23.jpg" alt="Watch">
+            <p> Twentythree</p>
+        </div>
+        <audio id="W" src="twentythree.mp3"></audio>
+        <div class="card" onclick="playSound('X')">
+            <img src="num 24.jpg" alt="Xylophone">
+            <p> Twentyfour</p>
+        </div>
+        <audio id="X" src="twentyfour.mp3"></audio>
+        <div class="card" onclick="playSound('Y')">
+            <img src="num 25.jpg" alt="Yacht">
+            <p> Twentyfive</p>
+        </div>
+        <audio id="Y" src="twentyfive.mp3"></audio>
+        <div class="card" onclick="playSound('Z')">
+            <img src="num 26.jpg" alt="Zebra">
+            <p> Twentysix</p>
+        </div>
+        <audio id="Z" src="twenty-six.mp3"></audio>
+        <div class="card" onclick="playSound('Z1')">
+            <img src="num 27.jpg" alt="Zebra">
+            <p> Twentyseven</p>
+        </div>
+        <audio id="Z1" src="twenty-seven.mp3"></audio>
+        <div class="card" onclick="playSound('Z2')">
+            <img src="num 28.jpg" alt="Zebra">
+            <p> Twentyeight</p>
+        </div>
+        <audio id="Z2" src="twenty-eight.mp3"></audio>
+        <div class="card" onclick="playSound('Z3')">
+            <img src="num 29.jpg" alt="Zebra">
+            <p> Twentynine</p>
+        </div>
+        <audio id="Z3" src="twenty-nine.mp3"></audio>
+        <div class="card" onclick="playSound('Z4')">
+            <img src="num 30.jpg" alt="Zebra">
+            <p> Thirty</p>
+        </div>
+        <audio id="Z4" src="thirty.mp3"></audio>
+    </div> 
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col">
+                <h4>company</h4>
+                <ul>
+                    <li><a href="#">about us</a></li>
+                    <li><a href="#">our services</a></li>
+                    <li><a href="#">privacy policy</a></li>
+                    <li><a href="#">affiliate program</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>get help</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">shipping</a></li>
+                    <li><a href="#">returns</a></li>
+                    <li><a href="#">order status</a></li>
+                    <li><a href="#">payment options</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>online shop</h4>
+                <ul>
+                    <li><a href="#">watch</a></li>
+                    <li><a href="#">bag</a></li>
+                    <li><a href="#">shoes</a></li>
+                    <li><a href="#">dress</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>follow us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+    
+    <script>
+        const navbar = document.querySelector('.navbar');
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const overlay = document.querySelector('.overlay');
+        let isMenuOpen = false;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            mobileNavToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+        }
+
+        mobileNavToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMenu();
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isMenuOpen) toggleMenu();
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && isMenuOpen) {
+                toggleMenu();
+            }
+        }); 
+    </script>
+    <script src="script.js"></script>
+    
+</body>
+</html>

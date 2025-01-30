@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<style>
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --gradient: linear-gradient(45deg, #ff3366, #ff6b6b, #4834d4, #686de0);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        body {
+            min-height: 100vh;   
+        }
+
+        .navbar {
+              /* position: fixed;  */
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            border-bottom: var(--border);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow);
+            background: #efb9cb;
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 5%;
+            background: rgba(10, 10, 10, 0.95);
+            position: fixed;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 8s linear infinite;
+            background-size: 300%;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            background-size: 300%;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            background-size: 300%;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a:hover::after {
+            width: 100%;
+            animation: gradient 8s linear infinite;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            z-index: 1001;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .mobile-nav-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav-toggle .bar {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: white;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-nav-toggle .bar:nth-child(1) { top: 14px; }
+        .mobile-nav-toggle .bar:nth-child(2) { top: 19px; }
+        .mobile-nav-toggle .bar:nth-child(3) { top: 24px; }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 400px;
+                background: linear-gradient(135deg, rgba(10, 10, 10, 0.99), rgba(20, 20, 20, 0.99));
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+                padding: 2rem;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-links::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03));
+                pointer-events: none;
+            }
+
+            .dropdown-content {
+        left: 0;
+        width: 100%;
+        color: black;
+    }
+
+    .dropdown-content a:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                opacity: 0;
+                transform: translateX(20px);
+                transition: all 0.4s ease;
+            }
+
+            .nav-links.active a {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links a:nth-child(1) { transition-delay: 0.1s; }
+            .nav-links a:nth-child(2) { transition-delay: 0.2s; }
+            .nav-links a:nth-child(3) { transition-delay: 0.3s; }
+            .nav-links a:nth-child(4) { transition-delay: 0.4s; }
+            .nav-links a:nth-child(5) { transition-delay: 0.5s; }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .mobile-nav-toggle.active .bar:nth-child(1) {
+                transform: translate(-50%, 5px) rotate(45deg);
+                width: 24px;
+            }
+
+            .mobile-nav-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-nav-toggle.active .bar:nth-child(3) {
+                transform: translate(-50%, -5px) rotate(-45deg);
+                width: 24px;
+            }
+
+              .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s ease;
+                backdrop-filter: blur(4px);
+            } 
+
+            .overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #EFB9CB;
+    min-width: 160px;
+    z-index: 1;
+    margin-left: -30px;
+}
+
+/* Dropdown link styles */
+.dropdown-content a {
+    color: whitesmoke;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Hover effect for dropdown links */
+.dropdown-content a:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+        
+        /* .container {
+    padding: 20px;
+} */
+.section {
+    display: none; /* Initially hidden */
+    margin-bottom: 30px;
+}
+.section.active {
+    display: block; /* Show active section */
+}
+.abc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+h2{
+  
+   text-align: center;
+   margin-top: 20px;
+   
+}
+
+.abc-grid div {
+    text-align: center;
+}
+.abc-grid img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+audio {
+    display: block;
+    margin-top: 5px;
+}
+.card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  
+        /* Footer */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+body{
+	line-height: 1.5;
+	font-family: 'Poppins', sans-serif;
+}
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+.container{
+	max-width: 1170px;
+	margin:auto;
+}
+.row{
+	display: flex;
+	flex-wrap: wrap;
+}
+ul{
+	list-style: none;
+}
+        .footer{
+	background-color: #24262b;
+    padding: 70px 0;
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+	font-size: 18px;
+	color: #ffffff;
+	text-transform: capitalize;
+	margin-bottom: 35px;
+	font-weight: 500;
+	position: relative;
+}
+.footer-col h4::before{
+	content: '';
+	position: absolute;
+	left:0;
+	bottom: -10px;
+	background-color: #e91e63;
+	height: 2px;
+	box-sizing: border-box;
+	width: 50px;
+}
+.footer-col ul li:not(:last-child){
+	margin-bottom: 10px;
+}
+.footer-col ul li a{
+	font-size: 16px;
+	text-transform: capitalize;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 300;
+	color: #bbbbbb;
+	display: block;
+	transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+	color: #ffffff;
+	padding-left: 8px;
+}
+.footer-col .social-links a{
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	background-color: rgba(255,255,255,0.2);
+	margin:0 10px 10px 0;
+	text-align: center;
+	line-height: 40px;
+	border-radius: 50%;
+	color: #ffffff;
+	transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+	color: #24262b;
+	background-color: #ffffff;
+}
+
+/*responsive*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
+ 
+
+</style>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">KidsZone</div>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="newhome.html">Home</a></li>
+                <div class="dropdown">
+                    <a href="javascript:void(0)">Learning</a>
+                    <div class="dropdown-content">
+                        <a href="abc2.html">ABC</a>
+                        <a href="animal2.html">Animals</a>
+                        <a href="months.html">Months & Days</a>
+                        <a href="vegetable.html">Vegetables</a>
+                        <a href="color2.html">Colours</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="javascript:void(0)">Numbers</a>
+                    <div class="dropdown-content">
+                        <a href="numbers2.html">Countings</a>
+                        <a href="table.html">Tables</a>
+                        <a href="add1.html">Addition & Subtraction</a>
+                    </div>
+                </div>
+                <li><a href="contactus.html">Contact</a></li>
+                <li><a href="sing and login.html">Login</a></li>
+                <li><a href="aboutus3.html">About us</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container" id="container1">
+        <!-- ABC Section -->
+        <section id="abc" class="section">
+    <h2>Animals</h2>
+    <div class="abc-grid">
+        <div class="card" onclick="playSound('A')">
+            <img src="animal16.webp" alt="Apple">
+            <p> Monkey</p>
+        </div>
+        <audio id="A" src="Monkey N.mp3"></audio>
+        <div class="card" onclick="playSound('B')">
+            <img src="aniaml10.webp" alt="Ball">
+            <p> Tiger</p>
+        </div>
+        <audio id="B" src="Tiger N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('C')">
+            <img src="animal6.webp" alt="Cat">
+            <p> Deer</p>
+        </div>
+        <audio id="C" src="Deer N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('D')">
+            <img src="animal7.webp" alt="Dog">
+            <p> Sheep</p>
+        </div>
+        <audio id="D" src="Sheep N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('E')">
+            <img src="animal15.webp" alt="Elephant">
+            <p> Dog </p>
+        </div>
+        <audio id="E" src="Dog N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('F')">
+            <img src="animal9.webp" alt="Frog">
+            <p> Penguin</p>
+        </div>
+        <audio id="F" src="Penguin N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('G')">
+            <img src="animaln2.jpeg" alt="Grape">
+            <p> Horse</p>
+        </div>
+        <audio id="G" src="Horse N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('H')">
+            <img src="animal5.jpeg" alt="Hat">
+            <p> Donkey</p>
+        </div>
+        <audio id="H" src="Donkey N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('I')">
+            <img src="animal3.png" alt="Ice Cream" height="150px">
+            <p> Goat</p>
+        </div>
+        <audio id="I" src="Goat N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('J')">
+            <img src="animal12.webp" alt="Jug">
+            <p> Elephant </p>
+        </div>
+        <audio id="J" src="Elephant N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('K')">
+            <img src="animal13.webp" alt="Kite">
+            <p> Shark</p>
+        </div>
+        <audio id="K" src="Shark N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('L')">
+            <img src="animaln1.jpeg" alt="Lion">
+            <p>Mountain Goat</p>
+        </div>
+        <audio id="L" src="Moutaingoat N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('M')">
+            <img src="aniaml14.webp" alt="Monkey">
+            <p>Snake</p>
+        </div>
+        <audio id="M" src="Snake N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('N')">
+            <img src="aniaml24.webp" alt="Nest">
+            <p>Lemur</p>
+        </div>
+        <audio id="N" src="Lemur N.mp3"></audio>
+        
+        <div class="card" id="card1" onclick="playSound('O')">
+            <img src="frog N.jpg" alt="Orange">
+            <p>Frog</p>
+        </div>
+        <audio id="O" src="Frog N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('P')">
+            <img src="animal 19.webp" alt="Parrot">
+            <p>Hen</p>
+        </div>
+        <audio id="P" src="Hen N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('Q')">
+            <img src="aniaml20.webp" alt="Queen">
+            <p>Rabbit</p>
+        </div>
+        <audio id="Q" src="Rabbit N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('R')">
+            <img src="animal21.webp" alt="Rabbit">
+            <p>Sea Horse</p>
+        </div>
+        <audio id="R" src="Seahorse Ne.mp3"></audio>
+        
+        <div class="card" onclick="playSound('S')">
+            <img src="animal23.jpg" alt="Sun">
+            <p> Rhyno </p>
+        </div>
+        <audio id="S" src="Rhyno N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('T')">
+            <img src="Mouse N.jpg" alt="Tree">
+            <p> Mouse</p>
+        </div>
+        <audio id="T" src="Mouse N.mp3"></audio>
+        
+        <div class="card" onclick="playSound('U')">
+            <img src="Crocodile N.jpg" alt="Umbrella">
+            <p>Crocodile</p>
+        </div>
+        <audio id="U" src="Crocodile N.mp3"></audio>
+
+        <div class="card" onclick="playSound('V')">
+            <img src="Wolf N.jpeg" alt="Umbrella">
+            <p> Wolf</p>
+        </div>
+        <audio id="V" src="Wolf N.mp3"></audio>
+
+        <div class="card" onclick="playSound('W')">
+            <img src="Kangaroo N.jpg" alt="Umbrella">
+            <p> Kangaroo</p>
+        </div>
+        <audio id="W" src="kangaroo N.mp3"></audio>
+        <div class="card" onclick="playSound('X')">
+            <img src="Fish N.jpg" alt="Umbrella">
+            <p>Fish</p>
+        </div>
+        <audio id="X" src="Fish N.mp3"></audio>
+        <div class="card" onclick="playSound('Y')">
+            <img src="Hippo.jpg" alt="Umbrella">
+            <p> Hippo</p>
+        </div>
+        <audio id="Y" src="Hippo N.mp3"></audio>
+        
+        
+    
+        
+        
+    </div> 
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col">
+                <h4>company</h4>
+                <ul>
+                    <li><a href="#">about us</a></li>
+                    <li><a href="#">our services</a></li>
+                    <li><a href="#">privacy policy</a></li>
+                    <li><a href="#">affiliate program</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>get help</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">shipping</a></li>
+                    <li><a href="#">returns</a></li>
+                    <li><a href="#">order status</a></li>
+                    <li><a href="#">payment options</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>online shop</h4>
+                <ul>
+                    <li><a href="#">watch</a></li>
+                    <li><a href="#">bag</a></li>
+                    <li><a href="#">shoes</a></li>
+                    <li><a href="#">dress</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>follow us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+    
+    <script>
+        const navbar = document.querySelector('.navbar');
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const overlay = document.querySelector('.overlay');
+        let isMenuOpen = false;
+
+        // Scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            mobileNavToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+        }
+
+        mobileNavToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMenu();
+            });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isMenuOpen) toggleMenu();
+        });
+
+        // Prevent scroll when menu is open
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && isMenuOpen) {
+                toggleMenu();
+            }
+        }); 
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

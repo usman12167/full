@@ -1,0 +1,56 @@
+
+.container {
+    padding: 20px;
+}
+.section {
+    display: none; /* Initially hidden */
+    margin-bottom: 30px;
+}
+.section.active {
+    display: block; /* Show active section */
+}
+.abc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+.abc-grid div {
+    text-align: center;
+}
+.abc-grid img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+audio {
+    display: block;
+    margin-top: 5px;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #ff9999;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+    nav {
+        flex-wrap: wrap;
+    }
+    nav a {
+        margin: 10px;
+    }
+    .abc-grid img {
+        width: 80px;
+        height: 80px;
+    }
+}
+

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Picker</title>
+  <link rel="stylesheet" href="color.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <style>
+
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 400px;
+        background: linear-gradient(135deg, rgba(10, 10, 10, 0.99), rgba(20, 20, 20, 0.99));
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+        opacity: 0;
+        transform: translateX(20px);
+        transition: all 0.4s ease;
+    }
+
+    .nav-links.active a {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .nav-links a:nth-child(1) {
+        transition-delay: 0.1s;
+    }
+
+    .nav-links a:nth-child(2) {
+        transition-delay: 0.2s;
+    }
+
+    .nav-links a:nth-child(3) {
+        transition-delay: 0.3s;
+    }
+
+    .nav-links a:nth-child(4) {
+        transition-delay: 0.4s;
+    }
+
+    .nav-links a:nth-child(5) {
+        transition-delay: 0.5s;
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+    }
+
+    .mobile-nav-toggle.active .bar:nth-child(1) {
+        transform: translate(-50%, 5px) rotate(45deg);
+        width: 24px;
+    }
+
+    .mobile-nav-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-nav-toggle.active .bar:nth-child(3) {
+        transform: translate(-50%, -5px) rotate(-45deg);
+        width: 24px;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        backdrop-filter: blur(4px);
+    }
+
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.color-display{
+  height: 500px;
+}
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="logo">KidsZone</div>
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="newhome.html">Home</a></li>
+        <div class="dropdown">
+          <a href="javascript:void(0)">Learning</a>
+          <div class="dropdown-content">
+            <a href="abc2.html">ABC</a>
+            <a href="animal2.html">Animals</a>
+            <a href="months.html">Months & Days</a>
+            <a href="vegetable.html">Vegetables</a>
+            <a href="color2.html">Colours</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a href="javascript:void(0)">Numbers</a>
+          <div class="dropdown-content">
+            <a href="numbers2.html">Countings</a>
+            <a href="table.html">Tables</a>
+            <a href="add1.html">Addition & Subtraction</a>
+          </div>
+        </div>
+        <li><a href="contactus.html">Contact</a></li>
+        <li><a href="sing and login.html">Login</a></li>
+        <li><a href="aboutus3.html">About us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="header">
+    <input type="text" id="colorSearch" placeholder="Search for a color..." autocomplete="off">
+    <div class="suggestions" id="suggestions"></div>
+  </div>
+  
+  <div>
+  <div id="colorDisplay" class="color-display">
+    <h1 id="colorName">Select a color!</h1>
+  </div>
+</div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="footer-col">
+          <h4>company</h4>
+          <ul>
+            <li><a href="#">about us</a></li>
+            <li><a href="#">our services</a></li>
+            <li><a href="#">privacy policy</a></li>
+            <li><a href="#">affiliate program</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>get help</h4>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">shipping</a></li>
+            <li><a href="#">returns</a></li>
+            <li><a href="#">order status</a></li>
+            <li><a href="#">payment options</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>online shop</h4>
+          <ul>
+            <li><a href="#">watch</a></li>
+            <li><a href="#">bag</a></li>
+            <li><a href="#">shoes</a></li>
+            <li><a href="#">dress</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>follow us</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+   // Select elements
+const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+const navLinks = document.querySelector('.nav-links');
+const overlay = document.querySelector('.overlay');
+
+// Function to toggle menu
+function toggleMenu() {
+    const isActive = navLinks.classList.contains('active');
+    
+    if (isActive) {
+        navLinks.classList.remove('active');
+        mobileNavToggle.classList.remove('active');
+        overlay.classList.remove('active');
+    } else {
+        navLinks.classList.add('active');
+        mobileNavToggle.classList.add('active');
+        overlay.classList.add('active');
+    }
+}
+
+// Event listener for the menu toggle button
+mobileNavToggle.addEventListener('click', toggleMenu);
+
+// Event listener for closing the menu when clicking on the overlay
+overlay.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+    mobileNavToggle.classList.remove('active');
+    overlay.classList.remove('active');
+});
+  </script>
+
+  <script src="color.js"></script>
+</body>
+</html>
